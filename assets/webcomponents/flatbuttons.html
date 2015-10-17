@@ -1,0 +1,124 @@
+<style>
+  [class*=flatbutton],
+  [flatbutton],
+  [type=button],
+  [type='submit'],
+  button {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    box-sizing: border-box !important;
+    vertical-align: top;
+    height: 10mm;
+    line-height: 9.5mm;
+    text-align: center;
+    width: auto;
+    min-width: 16mm;
+    margin: 3px 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    outline: 0 none !important;
+    border: 1px solid dimgrey;
+    user-select:none;
+    -moz-user-select:none;
+    -webkit-user-select:none;
+    cursor: pointer;
+    transition: all 200ms ease, border 200ms ease-in, boxShadow 100ms linear;
+  }
+
+  input[type=button]:active,
+  input[type=submit]:active,
+  button:active,
+  input[type=button]:focus,
+  input[type=submit]:focus,
+  button:focus {
+    outline: 0 none !important;
+  }
+
+  button::-moz-focus-inner,
+  input[type=button]::-moz-focus-inner,
+  input[type=submit]::-moz-focus-inner {
+    border: 0;
+    outline: 0 none !important;
+  }
+
+  [class*=flatbutton],
+  [flatbutton],
+  [flatbutton-go],
+  [flatbutton-info],
+  [flatbutton-warning],
+  [flatbutton-danger] {
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 15px;
+    background: hsla(0, 0%, 50%, 0.01);
+    color: dimgrey;
+  }
+
+  [class*=flatbutton]:hover,
+  [flatbutton]:hover,
+  [flatbutton-go]:hover,
+  [flatbutton-info]:hover,
+  [flatbutton-warning]:hover,
+  [flatbutton-danger]:hover,
+  button:hover {
+    transform: translateZ(5px);
+    color: white;
+    background: hsl(0, 0%, 35%);
+  }
+
+  [class*=flatbutton]:active,
+  [flatbutton]:active,
+  [flatbutton-go]:active,
+  [flatbutton-info]:active,
+  [flatbutton-warning]:active,
+  [flatbutton-danger]:active {
+    box-shadow: inset 0 2px 5px hsla(0, 0%, 10%, 0.4);
+    outline: 0 none !important;
+  }
+
+  .flatbutton-go,
+  [flatbutton-go] {
+    border-color: #209814;
+    border-color: #209814 !important;
+    color: #209814;
+  }
+
+  .flatbutton-info,
+  [flatbutton-info] {
+    border-color: #3074e3;
+    color: #3074e3;
+  }
+
+  .flatbutton-danger,
+  [flatbutton-danger] {
+    border-color: #d11717;
+    color: #d11717;
+  }
+
+  .flatbutton-warning,
+  [flatbutton-warning] {
+    border-color: #dfba1c;
+    color: #dfba1c;
+  }
+
+  .flatbutton-go:hover,
+  [flatbutton-go]:hover {
+    background: #209814;
+  }
+
+  .flatbutton-info:hover,
+  [flatbutton-info]:hover {
+    background: #3074e3;
+  }
+
+  .flatbutton-danger:hover,
+  [flatbutton-danger]:hover {
+    background: #d11717;
+  }
+
+  .flatbutton-warning:hover,
+  [flatbutton-warning]:hover {
+    background: #dfba1c;
+  }
+</style>

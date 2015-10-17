@@ -1,0 +1,283 @@
+<style>
+  side-bar {
+    position: absolute;
+    display: block;
+    left: 0;
+    top: 0;
+    z-index: 10;
+    width: 180px;
+    height: 100%;
+    background: #fff;
+    color: hsl(0, 0%, 40%);
+    box-shadow: 0 0 4px hsla(0, 0%, 30%, 0.5);
+    overflow: hidden;
+    overflow-y: auto;
+    font-size: 15px;
+    transition: all 250ms ease;
+  }
+
+  side-bar[slide='hidden'] {
+    transform: translateX(-100%);
+  }
+
+  side-bar[slide='shown'] {
+    transform: translateX(-100%);
+  }
+
+  sidebar-heading {
+    height: 10mm;
+    line-height: 10mm;
+    font-size: 1.1em;
+    background: hsl(0, 0%, 90%);
+    color: hsl(0, 0%, 40%);
+    text-shadow: 0 1px 2px hsl(0, 0%, 50%);
+    box-shadow: -1px 0 4px hsla(0, 0%, 30%, 0.55);
+  }
+
+  sidebar-item {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    text-align: right;
+    width: 100%;
+    height: 10mm;
+    line-height: 10mm;
+    transition: color, opacity 130ms ease, height 200ms ease-in;
+    cursor: pointer;
+  }
+
+  sidebar-item:hover {
+    background: hsl(0, 0%, 93%);
+    color: hsl(0, 0%, 40%);
+    transform: translateZ(10px);
+  }
+
+  sidebar-item > label {
+    display: inline;
+    margin-left: 15px !important;
+    margin-right: 10%;
+    font-size: 1.1em;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+  }
+
+  sidebar-item:hover {
+    background: hsl(0, 0%, 93%);
+    color: hsl(0, 0%, 40%);
+    transform: translateZ(10px);
+  }
+
+  sidebar-accordion {
+    width: 100%;
+    height: auto;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    text-align: center;
+    transition: all 180ms ease-in;
+    cursor: pointer;
+  }
+
+  sidebar-accordion:hover > header,
+  sidebar-accordion:active > header,
+  sidebar-accordion:focus > header {
+    color: hsl(0, 0%, 35%);
+    background: hsla(0, 0%, 60%, 0.5);
+  }
+
+  sidebar-accordion > header {
+    height: 12mm;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left:2px;
+    padding-right:2px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    vertical-align: middle;
+    font-size: 1em;
+    color: hsl(0, 0%, 50%);
+    background: hsla(0, 0%, 80%, 0.5);
+    transition: all 160ms ease;
+  }
+
+  sidebar-accordion > sidebar-item,
+  sidebar-accordion[open='false'] > sidebar-item {
+    height: 0;
+    opacity: 0;
+  }
+
+  sidebar-accordion[open='true'] > sidebar-item {
+    height: 10mm;
+    line-height: 10mm;
+    opacity: 1;
+  }
+
+  sidebar-accordion[open='false'] > *:not(header):not(sidebar-item) {
+    opacity: 0;
+    transition: opacity 150ms ease;
+  }
+
+  sidebar-accordion[open='true'] > *:not(header):not(sidebar-item) {
+    opacity: 1;
+  }
+
+  @media all and (max-width:600px),
+  only screen and (max-device-width:750px) {
+    side-bar {
+      position: relative;
+      top: 0;
+      left: 0;
+      display: block;
+      z-index: 10;
+      width: 100%;
+      height: auto;
+      overflow-y: auto;
+    }
+    sidebar-item {
+      display: block;
+      background: hsl(0, 0%, 100%);
+      text-align: justify;
+      word-spacing: 5px;
+      letter-spacing: 1px;
+      font-size: 1.2em;
+      padding-left: 10%;
+      width: 100%;
+      height: 13mm;
+      line-height: 13mm;
+    }
+    sidebar-item:last-of-type {
+      box-shadow: 0 5px 5px -4px hsla(0, 0%, 0%, 0.4);
+    }
+    sidebar-item > label {
+      position: absolute;
+      display: block;
+      transform: translateZ(10px);
+      right: 10%;
+      top: 0;
+      margin: 0 !important;
+      font-size: 1.1em;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+    }
+  }
+</style>
+<script type="text/javascript">
+  "use strict";
+  ((document) => {
+    document.registerElement('side-bar', {
+      prototype: Object.create(HTMLElement.prototype)
+    });
+
+    let SidebarItemElement = Object.create(HTMLElement.prototype);
+
+    SidebarItemElement.createdCallback = function() {
+      if (this.querySelector('label') !== null && window.innerWidth > 500) {
+        this.style.paddingRight = '8%';
+      } else if (window.innerWidth > 500) {
+        this.style.paddingRight = '35%';
+      }
+    };
+    document.registerElement('sidebar-item', {
+      prototype: SidebarItemElement
+    });
+
+
+    let SidebarAccordion = Object.create(HTMLElement.prototype);
+
+    SidebarAccordion.createdCallback = function() {
+
+      let element = this;
+
+      element.insertBefore(document.createElement('header'), element.firstChild);
+
+      element.SetHeader = function(HeaderValue) {
+        if (HeaderValue.length >= 22) {
+          element.firstChild.style.fontSize = '1em';
+        }
+        element.firstChild.innerHTML = HeaderValue;
+        element.setAttribute('header', HeaderValue);
+      };
+
+      if (element.hasAttribute('header')) {
+        element.SetHeader(element.getAttribute('header'));
+      }
+
+      new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === "attributes" && mutation.attributeName === "header" && element.hasAttribute("header")) {
+            element.firstChild.innerHTML = element.getAttribute('header');
+            if (element.getAttribute('header').length >= 22) {
+              element.firstChild.style.fontSize = '1em';
+            }
+          }
+        });
+      }).observe(element, {
+        attributes: true,
+        childList: false,
+        characterData: false
+      });
+
+      if (element.hasAttribute('open') && element.getAttribute('open') === 'true') {
+        element.open = true;
+      } else {
+        element.open = false;
+      }
+
+      function CheckState() {
+        if (element.open === true) {
+          element.setAttribute('open', 'true');
+        } else if (element.open === false) {
+          element.setAttribute('open', 'false');
+        }
+      }
+
+      if (!element.hasAttribute('mode')) {
+        this.addEventListener('click', (e) => {
+          if (e.target.tagName === 'SIDEBAR-ACCORDION' || e.target.tagName === 'HEADER' && e.target.parentNode.tagName === 'SIDEBAR-ACCORDION') {
+            element.open = !element.open;
+            CheckState();
+          }
+        });
+      } else if (element.hasAttribute('mode') && element.getAttribute('mode') === 'hover') {
+        element.addEventListener('mouseover', (e) => {
+          element.open = true;
+          CheckState();
+        });
+        element.addEventListener('mouseleave', (e) => {
+          element.open = false;
+          CheckState();
+        });
+        element.addEventListener('click', (e) => {
+          if (e.target.tagName === 'SIDEBAR-ACCORDION' || e.target.tagName === 'HEADER' && e.target.parentNode.tagName === 'SIDEBAR-ACCORDION') {
+            element.open = !element.open;
+            CheckState();
+          }
+        });
+      } else if (element.hasAttribute('mode')) {
+        element.addEventListener(element.getAttribute('mode'), (e) => {
+          if (e.target.tagName === 'SIDEBAR-ACCORDION' || e.target.tagName === 'HEADER' && e.target.parentNode.tagName === 'SIDEBAR-ACCORDION') {
+            element.open = !element.open;
+            CheckState();
+          }
+        });
+      }
+    };
+
+    document.registerElement('sidebar-accordion', {
+      prototype: SidebarAccordion
+    });
+
+  })(document.currentScript.ownerDocument);
+</script>
