@@ -9,6 +9,7 @@ Web File Browser with Golang back-end , front-end logic written in ECMASCRIPT 6 
 * pure JS no frameworks other than inhouse Crafter.js  
 * built using some parts of my Crafter.js toolkit  
 * written in ES6 , makes use of Object.observe and Web Components  
+* Fontello CSS/Webfonts for some icons - credit to the fontello team
  
 
 #### TODO
